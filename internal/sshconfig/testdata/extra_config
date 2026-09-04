@@ -1,0 +1,4 @@
+Host included-host
+    # Description Comes from an included file
+    HostName 172.16.0.5
+    User includeduser

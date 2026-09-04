@@ -1,0 +1,28 @@
+Include extra_config
+
+Host vuecorevm
+    # Description Servidor Docker Core (Keycloak, DNS, Nginx e Grafana)
+    # VPN: true
+    # VPN Name: OpenVPN Vuepay | Azure VPN PD Case | OpenVPN PD Case
+    HostName 10.10.2.4
+    User vueadmin
+    IdentityFile ~/.ssh/vuepay/vuecorevm_key.pem
+
+Host no-comments
+    HostName 10.10.2.9
+
+Host web-a web-b
+    # Description Shared block with two aliases
+    User www
+
+Host bastion-*
+    IdentityFile ~/.ssh/bastion_key.pem
+
+Host bastion-01
+    HostName 10.10.3.1
+
+# General defaults, deliberately placed last: OpenSSH uses "first value
+# wins", so a "Host *" block earlier in the file would shadow the
+# host-specific settings above.
+Host *
+    User defaultuser
