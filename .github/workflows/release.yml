@@ -1,9 +1,8 @@
 name: Release
 
 on:
-  push:
-    tags:
-      - 'v*'
+  release:
+    types: [published]
 
 permissions:
   contents: write
@@ -12,18 +11,19 @@ jobs:
   release:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
 
-      - uses: actions/setup-go@v5
+      - uses: actions/setup-go@v7
         with:
           go-version-file: go.mod
 
       - name: Build binaries
         env:
           CGO_ENABLED: 0
+          TAG: ${{ github.event.release.tag_name }}
         run: |
           mkdir -p dist
-          VERSION="${GITHUB_REF_NAME#v}"
+          VERSION="${TAG#v}"
           LDFLAGS="-s -w -X main.version=${VERSION}"
 
           GOOS=windows GOARCH=amd64 go build -ldflags "$LDFLAGS" -o dist/sshm-windows-amd64.exe ./cmd/sshm
@@ -31,10 +31,9 @@ jobs:
 
           (cd dist && sha256sum * > checksums.txt)
 
-      - name: Create GitHub release
+      - name: Upload release assets
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          TAG: ${{ github.event.release.tag_name }}
         run: |
-          gh release create "$GITHUB_REF_NAME" dist/* \
-            --title "$GITHUB_REF_NAME" \
-            --generate-notes
+          gh release upload "$TAG" dist/* --clobber
