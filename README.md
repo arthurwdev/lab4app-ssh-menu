@@ -3,6 +3,7 @@
 <img src="assets/sshm.png" alt="SSH Menu logo" width="96" height="96">
 
 [![Build](https://github.com/arthurwdev/lab4app-ssh-menu/actions/workflows/build.yml/badge.svg)](https://github.com/arthurwdev/lab4app-ssh-menu/actions/workflows/build.yml)
+[![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](LICENSE)
 
 An interactive terminal menu for connecting to hosts defined in your `~/.ssh/config`. Pick a host with the arrow keys, press Enter, and `sshm` runs `ssh <alias>` for you.
 
@@ -79,3 +80,9 @@ tools/genicon/        generates assets/sshm.ico from assets/sshm.png
 ```
 go test ./...
 ```
+
+## License
+
+Licensed under the [GNU General Public License v3.0](LICENSE).
+
+You are free to use, share, and modify `sshm`, for personal or commercial purposes, at no cost. If you distribute it or a modified version, you must keep it under the same license (GPLv3) and provide the source code — it cannot be turned into closed-source or paid software. Forks should keep clear attribution to the original project and avoid presenting themselves as the official `sshm`.
