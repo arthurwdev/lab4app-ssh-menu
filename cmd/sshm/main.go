@@ -1,6 +1,3 @@
-// Command sshm reads ~/.ssh/config and shows an interactive menu of
-// configured hosts; picking one runs "ssh <alias>".
-//
 // Copyright (C) 2025 Arthur Souza
 //
 // This program is free software: you can redistribute it and/or modify
@@ -15,6 +12,9 @@
 //
 // You should have received a copy of the GNU General Public License
 // along with this program. If not, see <https://www.gnu.org/licenses/>.
+
+// Command sshm reads ~/.ssh/config and shows an interactive menu of
+// configured hosts; picking one runs "ssh <alias>".
 package main
 
 import (
