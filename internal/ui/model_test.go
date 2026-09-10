@@ -66,25 +66,23 @@ func TestModel_EscCancelsWithoutSelection(t *testing.T) {
 	}
 }
 
-func TestModel_CursorClampedAtListBounds(t *testing.T) {
+func TestModel_CursorWrapsAtListBounds(t *testing.T) {
 	m := New(sampleHosts(), "0.1.0", "myhost", "arthur")
 	updated, _ := m.Update(tea.WindowSizeMsg{Width: 100, Height: 20})
 	m = updated.(Model)
 
-	for i := 0; i < 5; i++ {
-		updated, _ = m.Update(tea.KeyMsg{Type: tea.KeyUp})
-		m = updated.(Model)
-	}
-	if m.cursor != 0 {
-		t.Fatalf("cursor = %d, want 0 (clamped at top)", m.cursor)
+	last := len(sampleHosts()) - 1
+
+	updated, _ = m.Update(tea.KeyMsg{Type: tea.KeyUp})
+	m = updated.(Model)
+	if m.cursor != last {
+		t.Fatalf("cursor = %d, want %d (up from first item wraps to last)", m.cursor, last)
 	}
 
-	for i := 0; i < 5; i++ {
-		updated, _ = m.Update(tea.KeyMsg{Type: tea.KeyDown})
-		m = updated.(Model)
-	}
-	if m.cursor != len(sampleHosts())-1 {
-		t.Fatalf("cursor = %d, want %d (clamped at bottom)", m.cursor, len(sampleHosts())-1)
+	updated, _ = m.Update(tea.KeyMsg{Type: tea.KeyDown})
+	m = updated.(Model)
+	if m.cursor != 0 {
+		t.Fatalf("cursor = %d, want 0 (down from last item wraps to first)", m.cursor)
 	}
 }
 

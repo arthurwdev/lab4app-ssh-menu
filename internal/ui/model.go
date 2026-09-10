@@ -81,13 +81,21 @@ func (m Model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 			m.quitting = true
 			return m, tea.Quit
 		case "up", "k":
-			if m.cursor > 0 {
-				m.cursor--
+			if len(m.hosts) > 0 {
+				if m.cursor > 0 {
+					m.cursor--
+				} else {
+					m.cursor = len(m.hosts) - 1
+				}
 			}
 			m.clampOffset()
 		case "down", "j":
-			if m.cursor < len(m.hosts)-1 {
-				m.cursor++
+			if len(m.hosts) > 0 {
+				if m.cursor < len(m.hosts)-1 {
+					m.cursor++
+				} else {
+					m.cursor = 0
+				}
 			}
 			m.clampOffset()
 		}
